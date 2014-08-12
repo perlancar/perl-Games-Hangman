@@ -67,21 +67,21 @@ Phraselists are searched in C<Games::Word::Phraselist::*> modules.
 
 =head1 OPTIONS
 
-=head2 --list=s, -l
+=head2 C<--list=s, -l>
 
 Select word-/phraselist, will be searched in C<Games::Word::Wordlist::> or
 C<Games::Word::Phraselist::>.
 
-=head2 --min-len=i
+=head2 C<--min-len=i>
 
 Minimum word/phrase length. The default is 6 for word, 0 for phrase.
 
 
 =head1 SEE ALSO
 
-hangman from C<bsdgames> package
+hangman from C<bsdgames> Debian package
 
-hangman from L<ppt> (Perl Power Tools)
+hangman from C<ppt> (Perl Power Tools) on CPAN
 
 L<Games::Word::Wordlist>
 
