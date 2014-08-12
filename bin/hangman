@@ -12,6 +12,7 @@ my %opts = (
 );
 GetOptions(
     'list|l=s' => \$opts{list},
+    'min-len=i' => \$opts{min_len},
 );
 
 my $game = Games::Hangman->new(%opts);
