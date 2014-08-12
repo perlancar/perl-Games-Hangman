@@ -324,12 +324,6 @@ sub word_guessed {
     1;
 }
 
-sub guess {
-    my ($self, $letter) = @_;
-
-    $self->num_moves($self->num_moves+1);
-}
-
 sub run {
     my $self = shift;
 
