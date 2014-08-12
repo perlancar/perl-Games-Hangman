@@ -12,7 +12,7 @@ my %opts = (
 );
 GetOptions(
     'list|l=s' => \$opts{list},
-w);
+);
 
 my $game = Games::Hangman->new(%opts);
 $game->run;
