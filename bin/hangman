@@ -19,7 +19,7 @@ my $game = Games::Hangman->new(%opts);
 $game->run;
 
 # ABSTRACT: A text-based hangman
-# PODNAME: hangman
+# PODNAME:
 
 =head1 SYNOPSIS
 
