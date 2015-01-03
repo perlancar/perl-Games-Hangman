@@ -418,17 +418,6 @@ sub run {
  % hangman
 
 
-=head1 TODO
-
-=over
-
-=item * Record and save high scores
-
-=item * Add some animation
-
-=back
-
-
 =head1 SEE ALSO
 
 L<hangman>
