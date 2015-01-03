@@ -1,5 +1,12 @@
 Revision history for Games-Hangman
 
+0.03    2015-01-03 (PERLANCAR)
+
+	- No functional changes.
+
+	- Rebuild (Generate TODO.md).
+
+
 0.02    2014-08-12 (SHARYANTO)
 
         - POD fixes.
