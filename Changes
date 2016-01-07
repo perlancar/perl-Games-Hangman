@@ -1,5 +1,10 @@
 Revision history for Games-Hangman
 
+0.04    2016-01-08 (PERLANCAR)
+
+	- Switch from Games::Word::Wordlist::* to WordList::*.
+
+
 0.03    2015-01-03 (PERLANCAR)
 
 	- No functional changes.
