@@ -15,7 +15,7 @@ use Mo qw(build default);
 use experimental 'smartmatch';
 
 has list              => (is => 'rw');
-has words             => (is => 'rw');
+has wl                => (is => 'rw');
 has list_type         => (is => 'rw'); # either (w)ord or (p)hrase
 has min_len           => (is => 'rw');
 has current_word      => (is => 'rw');
@@ -213,8 +213,17 @@ sub new_word {
     my $self = shift;
 
     my $word;
-    my $tries = 0;
-    $word = $self->words->[rand @{ $self->words }];
+  PICK:
+    {
+        my $tries = 0;
+        while (++$tries < 100) {
+            $word = $self->wl->pick();
+            if (length($word) >= $self->min_len) {
+                last PICK;
+            }
+        }
+        die "Can't find eligible word from list ".$self->list."\n";
+    }
 
     $self->current_word($word);
     $self->num_words( $self->num_words+1 );
@@ -228,19 +237,22 @@ sub BUILD {
 
     # pick word-/phraselist
     {
-        my $wmods = list_modules("Games::Word::Wordlist::",
+        my $wmods = list_modules("WordList::",
                                  {list_modules=>1, recurse=>1});
-        my @wmods = keys %$wmods; s/^Games::Word::Wordlist::// for @wmods;
-        my $pmods = list_modules("Games::Word::Phraselist::",
+        my @wmods = grep {!/\AWordList::Phrase::/} keys %$wmods;
+        s/^WordList::// for @wmods;
+
+        my $pmods = list_modules("WordList::Phrase::",
                                  {list_modules=>1, recurse=>1});
-        my @pmods = keys %$pmods; s/^Games::Word::Phraselist::// for @pmods;
+        my @pmods = keys %$pmods; s/^WordList::// for @pmods;
+
         my ($list, $type) = @_;
         if ($self->list) {
             $list = $self->list;
-            if ($list =~ s/^Games::Word::Wordlist:://) {
-                $type = 'w';
-            } elsif ($list =~ s/^Games::Word::Phraselist:://) {
+            if ($list =~ s/^WordList::Phrase:://) {
                 $type = 'p';
+            } elsif ($list =~ /^WordList::/) {
+                $type = 'w';
             } else {
                 $type = '';
             }
@@ -260,45 +272,33 @@ sub BUILD {
         } else {
             $type = rand() > 0.5 ? 'w':'p';
             if ($type eq 'w') {
-                if (($ENV{LANG} // "") =~ /^id/ && "KBBI" ~~ @wmods) {
-                    $list = "KBBI";
+                if (($ENV{LANG} // "") =~ /^id/ && "ID::KBBI" ~~ @wmods) {
+                    $list = "ID::KBBI";
                 } else {
                     if (@wmods > 1) {
-                        @wmods = grep {$_ ne 'KBBI'} @wmods;
+                        @wmods = grep {$_ ne 'ID::KBBI'} @wmods;
                     }
                     $list = $wmods[rand @wmods];
                 }
             } else {
-                if (($ENV{LANG} // "") =~ /^id/ && "Proverb::KBBI" ~~ @pmods) {
-                    $list = "Proverb::KBBI";
+                if (($ENV{LANG} // "") =~ /^id/ && "Phrase::ID::Proverb::KBBI" ~~ @pmods) {
+                    $list = "Phrase::ID::Proverb::KBBI";
                 } else {
                     if (@pmods > 1) {
-                        @pmods = grep {$_ ne 'Proverb::KBBI'} @pmods;
+                        @pmods = grep {$_ ne 'Phrase::ID::Proverb::KBBI'} @pmods;
                     }
                     $list = $pmods[rand @pmods];
                 }
             }
         }
-        my $mod = ($type eq 'w' ? "Games::Word::Wordlist::$list" :
-                       "Games::Word::Phraselist::$list");;
+        my $mod = "WordList::$list";
         load $mod;
         $self->list_type($type);
         $self->list($list);
         if (!defined($self->min_len)) {
-            $self->min_len($type eq 'w' ? 6 : 0);
+            $self->min_len($type eq 'w' ? 5 : 0);
         }
-        my $wl = $mod->new;
-        my @words;
-        my $re = ".{".($self->min_len+0)."}";
-        if ($type eq 'w') {
-            @words = $wl->words_like(qr/$re/);
-        } else {
-            @words = $wl->phrases_like(qr/$re/);
-        }
-        unless (@words) {
-            die "Can't find eligible entries from $list\n" unless @words;
-        }
-        $self->words(\@words);
+        $self->wl($mod->new);
     }
 }
 
