@@ -218,6 +218,13 @@ sub new_word {
         my $tries = 0;
         while (++$tries < 100) {
             $word = $self->wl->pick();
+
+            # deal with WordList::Test::Empty
+            last unless defined $word;
+
+            # for now we deal with ascii only
+            next if $word =~ /[^\x20-\x7f]/;
+
             if (length($word) >= $self->min_len) {
                 last PICK;
             }
