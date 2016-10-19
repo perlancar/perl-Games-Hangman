@@ -15,6 +15,7 @@ GetOptions(
     'min-len=i' => \$opts{min_len},
 );
 
+binmode(STDOUT, ":utf8");
 my $game = Games::Hangman->new(%opts);
 $game->run;
 
