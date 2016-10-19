@@ -7,6 +7,7 @@ package Games::Hangman;
 use Module::List qw(list_modules);
 use Module::Load;
 use Term::ReadKey;
+use Text::Unaccent;
 use Text::WideChar::Util qw(wrap);
 use Time::HiRes qw(sleep);
 
@@ -219,11 +220,14 @@ sub new_word {
         while (++$tries < 100) {
             $word = $self->wl->pick();
 
-            # deal with WordList::Test::Empty
+            # deal with empty wordlists
             last unless defined $word;
 
             # for now we deal with ascii only
-            next if $word =~ /[^\x20-\x7f]/;
+            if ($word =~ /[^\x20-\x7f]/) {
+                $word = unac_string("utf8", $word);
+                next if $word =~ /[^\x20-\x7f]/;
+            }
 
             if (length($word) >= $self->min_len) {
                 last PICK;
