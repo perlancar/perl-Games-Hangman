@@ -1,5 +1,3 @@
-Revision history for Games-Hangman
-
 0.05    2016-10-19 (PERLANCAR)
 
 	- Deal with non-ASCII words (try to unaccent word first, then skip if
