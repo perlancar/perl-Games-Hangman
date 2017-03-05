@@ -19,6 +19,7 @@ has list              => (is => 'rw');
 has wl                => (is => 'rw');
 has list_type         => (is => 'rw'); # either (w)ord or (p)hrase
 has min_len           => (is => 'rw');
+has max_len           => (is => 'rw');
 has current_word      => (is => 'rw');
 has num_words         => (is => 'rw', default=>0); # words that have been played
 has num_guessed_words => (is => 'rw', default=>0); # have been guessed correctly
@@ -229,9 +230,11 @@ sub new_word {
                 next if $word =~ /[^\x20-\x7f]/;
             }
 
-            if (length($word) >= $self->min_len) {
-                last PICK;
-            }
+            next if $self->min_len && length($word) < $self->min_len;
+            next if $self->max_len && length($word) > $self->max_len;
+
+            # accept
+            last PICK;
         }
         die "Can't find eligible word from list ".$self->list."\n";
     }

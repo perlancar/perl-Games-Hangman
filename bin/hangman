@@ -9,10 +9,12 @@ use Getopt::Long qw(:config bundling auto_version auto_help);
 my %opts = (
     list => undef,
     min_len => undef,
+    max_len => undef,
 );
 GetOptions(
     'list|l=s' => \$opts{list},
     'min-len=i' => \$opts{min_len},
+    'max-len=i' => \$opts{max_len},
 );
 
 binmode(STDOUT, ":utf8");
@@ -76,7 +78,11 @@ C<Games::Word::Phraselist::>.
 
 =head2 C<--min-len=i>
 
-Minimum word/phrase length. The default is 6 for word, 0 for phrase.
+Minimum word/phrase length. The default is 5 for word, 0 for phrase.
+
+=head2 C<--max-len=i>
+
+Maximum word/phrase length. The default is unlimited.
 
 
 =head1 SEE ALSO
