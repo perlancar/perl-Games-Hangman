@@ -159,7 +159,7 @@ sub draw {
     my ($termwidth, $wordwidth);
     {
         if (eval "require Term::Size") {
-            ($termwidth, undef) = Term::Size::chars();
+            ($termwidth, undef) = Term::Size::chars(*STDOUT{IO});
         } else {
             $termwidth = 80;
         }
