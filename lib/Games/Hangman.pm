@@ -9,7 +9,6 @@ package Games::Hangman;
 use Module::List qw(list_modules);
 use Module::Load;
 use Term::ReadKey;
-use Text::Unaccent;
 use Text::WideChar::Util qw(wrap);
 use Time::HiRes qw(sleep);
 
@@ -214,6 +213,8 @@ sub read_key {
 }
 
 sub new_word {
+    require Text::Unaccent;
+
     my $self = shift;
 
     my $word;
@@ -228,7 +229,7 @@ sub new_word {
 
             # for now we deal with ascii only
             if ($word =~ /[^\x20-\x7f]/) {
-                $word = unac_string("utf8", $word);
+                $word = Text::Unaccent::unac_string("utf8", $word);
                 next if $word =~ /[^\x20-\x7f]/;
             }
 
@@ -425,6 +426,7 @@ sub run {
     $self->cleanup;
 }
 
+1;
 # ABSTRACT: A text-based hangman
 
 =for Pod::Coverage ^(.+)$

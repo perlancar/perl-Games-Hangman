@@ -19,7 +19,7 @@ GetOptions(
     'max-len=i' => \$opts{max_len},
 );
 
-binmode(STDOUT, ":utf8");
+binmode(STDOUT, ":encoding(utf8)");
 my $game = Games::Hangman->new(%opts);
 $game->run;
 

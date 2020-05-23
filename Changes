@@ -1,3 +1,13 @@
+0.061   2020-05-23  Released-By: PERLANCAR; Urgency: medium
+
+	- [doc] Remove mention of Games::Word::Wordlist::* modules.
+
+	- [bugfix] Fix the use of Term::Size::chars().
+
+	- [dist] Rename bin/ to script/ to be compatible with static
+	  install requirement.
+
+
 0.060   2017-03-05  Released-By: PERLANCAR
 
 	- Add option --max-len.
