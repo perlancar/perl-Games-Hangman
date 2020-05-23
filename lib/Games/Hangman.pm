@@ -1,6 +1,8 @@
 package Games::Hangman;
 
+# AUTHORITY
 # DATE
+# DIST
 # VERSION
 
 #use Color::ANSI::Util qw(ansibg ansifg);

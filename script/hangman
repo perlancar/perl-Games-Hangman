@@ -1,6 +1,8 @@
 #!perl
 
+# AUTHORITY
 # DATE
+# DIST
 # VERSION
 
 use Games::Hangman;
@@ -59,12 +61,9 @@ What's different about this particular variant:
 
 =over
 
-=item * Wordlist is searched from C<Games::Word::Wordlist::*> modules
+=item * Longer phrases are allowed
 
-=item * Phraselist
-
-Aside from words, phrases are also allowed. Non-letters will be revealed first.
-Phraselists are searched in C<Games::Word::Phraselist::*> modules.
+=item * Wordlists (or phrase list) are searched from C<WordList::*> modules
 
 =back
 
