@@ -14,7 +14,7 @@ my %opts = (
     max_len => undef,
 );
 GetOptions(
-    'list|l=s' => \$opts{list},
+    'wordlist|list|l|w=s' => \$opts{list},
     'min-len=i' => \$opts{min_len},
     'max-len=i' => \$opts{max_len},
 );
@@ -72,8 +72,12 @@ What's different about this particular variant:
 
 =head2 C<--list=s, -l>
 
-Select word-/phraselist, will be searched in C<Games::Word::Wordlist::> or
-C<Games::Word::Phraselist::>.
+Select word-/phraselist, will be searched in C<Wordlist::*> or
+C<WordList::Phrase::>.
+
+=head2 C<--wordlist=s, -w>
+
+Alias for C<--wordlist>.
 
 =head2 C<--min-len=i>
 
@@ -90,6 +94,4 @@ hangman from C<bsdgames> Debian package
 
 hangman from C<ppt> (Perl Power Tools) on CPAN
 
-L<Games::Word::Wordlist>
-
-L<Games::Word::Phraselist>
+C<WordList::*>
