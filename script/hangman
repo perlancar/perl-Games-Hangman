@@ -6,7 +6,7 @@
 # VERSION
 
 use Games::Hangman;
-use Getopt::Long qw(:config bundling auto_version auto_help);
+use Getopt::Long::More;
 
 my %opts = (
     list => undef,
@@ -14,7 +14,17 @@ my %opts = (
     max_len => undef,
 );
 GetOptions(
-    'wordlist|list|l|w=s' => \$opts{list},
+    'wordlist|list|l|w=s' => optspec(
+        destination => \$opts{list},
+        completion => sub {
+            require Complete::Module;
+            my %cargs = @_;
+            Complete::Module::complete_module(
+                word => $cargs{word},
+                ns_prefix => 'WordList',
+            );
+        },
+    ),
     'min-len=i' => \$opts{min_len},
     'max-len=i' => \$opts{max_len},
 );

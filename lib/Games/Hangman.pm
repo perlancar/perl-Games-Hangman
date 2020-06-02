@@ -266,6 +266,7 @@ sub BUILD {
         my ($list, $type) = @_;
         if ($self->list) {
             $list = $self->list;
+            $list =~ s!/!::!g; # normalize Foo/Bar into Foo::Bar
             if ($list =~ s/^WordList::Phrase:://) {
                 $type = 'p';
             } elsif ($list =~ /^WordList::/) {
