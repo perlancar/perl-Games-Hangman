@@ -1,3 +1,8 @@
+0.063   2020-06-02  Released-By: PERLANCAR; Urgency: medium
+
+	- [ux] Add completion for -w.
+
+
 0.062   2020-05-23  Released-By: PERLANCAR; Urgency: medium
 
         - [ux] Add --wordlist (-w) as aliases for --list (-l).
